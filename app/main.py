@@ -13,6 +13,10 @@ class HorseCreate(BaseModel):
     name: str
     breed: str
 
+class TaskCreate(BaseModel):
+    title: str
+    status: str = "Pending"
+
 def get_db():
     db = SessionLocal()
     try:
@@ -89,3 +93,20 @@ def delete_horse(
     db.commit()
 
     return {"message": f"Horse {horse_id} deleted"}
+
+@app.get("/tasks")
+def get_tasks(db: Session = Depends(get_db)):
+    return db.query(models.Task).all()
+
+@app.post("/tasks")
+def create_task(task: TaskCreate, db: Session = Depends(get_db)):
+    db_task = models.Task(
+        title=task.title,
+        status=task.status
+    )
+
+    db.add(db_task)
+    db.commit()
+    db.refresh(db_task)
+
+    return db_task
