@@ -16,6 +16,7 @@ class HorseCreate(BaseModel):
 class TaskCreate(BaseModel):
     title: str
     status: str = "Pending"
+    horse_id: int
 
 def get_db():
     db = SessionLocal()
@@ -102,7 +103,8 @@ def get_tasks(db: Session = Depends(get_db)):
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     db_task = models.Task(
         title=task.title,
-        status=task.status
+        status=task.status,
+        horse_id=task.horse_id
     )
 
     db.add(db_task)
