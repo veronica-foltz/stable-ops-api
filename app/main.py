@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from typing import Optional
 
 from app.database import SessionLocal, engine
 from app import models
@@ -17,6 +18,11 @@ class TaskCreate(BaseModel):
     title: str
     status: str = "Pending"
     horse_id: int
+
+class TaskUpdate(BaseModel):
+    title: str
+    status: str
+    horse_id: Optional[int] = None
 
 def get_db():
     db = SessionLocal()
@@ -112,3 +118,67 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     db.refresh(db_task)
 
     return db_task
+
+@app.get("/horses/{horse_id}/tasks")
+def get_horse_tasks(
+    horse_id: int,
+    db: Session = Depends(get_db)
+):
+    horse = db.query(models.Horse).filter(
+        models.Horse.id == horse_id
+    ).first()
+
+    if horse is None:
+        raise HTTPException(status_code=404, detail="Horse not found")
+
+    return horse.tasks
+
+@app.get("/tasks/{task_id}")
+def get_task(task_id: int, db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(
+        models.Task.id == task_id
+    ).first()
+
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    return task
+
+@app.put("/tasks/{task_id}")
+def update_task(
+    task_id: int,
+    task: TaskUpdate,
+    db: Session = Depends(get_db)
+):
+    db_task = db.query(models.Task).filter(
+        models.Task.id == task_id
+    ).first()
+
+    if db_task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    db_task.title = task.title
+    db_task.status = task.status
+    db_task.horse_id = task.horse_id
+
+    db.commit()
+    db.refresh(db_task)
+
+    return db_task
+
+@app.delete("/tasks/{task_id}")
+def delete_task(
+    task_id: int,
+    db: Session = Depends(get_db)
+):
+    task = db.query(models.Task).filter(
+        models.Task.id == task_id
+    ).first()
+
+    if task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    db.delete(task)
+    db.commit()
+
+    return {"message": f"Task {task_id} deleted"}
