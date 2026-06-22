@@ -24,6 +24,10 @@ class TaskUpdate(BaseModel):
     status: str
     horse_id: Optional[int] = None
 
+class EmployeeCreate(BaseModel):
+    name: str
+    role: str
+
 def get_db():
     db = SessionLocal()
     try:
@@ -182,3 +186,20 @@ def delete_task(
     db.commit()
 
     return {"message": f"Task {task_id} deleted"}
+
+@app.get("/employees")
+def get_employees(db: Session = Depends(get_db)):
+    return db.query(models.Employee).all()
+
+@app.post("/employees")
+def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
+    db_employee = models.Employee(
+        name=employee.name,
+        role=employee.role
+    )
+
+    db.add(db_employee)
+    db.commit()
+    db.refresh(db_employee)
+
+    return db_employee
