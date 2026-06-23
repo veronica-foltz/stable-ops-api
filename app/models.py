@@ -22,9 +22,21 @@ class Task(Base):
 
     horse = relationship("Horse", back_populates="tasks")
 
+    employee_id = Column(
+        Integer,
+        ForeignKey("employees.id")
+    )
+
+    employee = relationship(
+        "Employee",
+            back_populates="tasks"
+    )
+
 class Employee(Base):
     __tablename__ = "employees"
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     role = Column(String)
+
+    tasks = relationship("Task", back_populates="employee")

@@ -18,11 +18,13 @@ class TaskCreate(BaseModel):
     title: str
     status: str = "Pending"
     horse_id: int
+    employee_id: int
 
 class TaskUpdate(BaseModel):
     title: str
     status: str
     horse_id: Optional[int] = None
+    employee_id: Optional[int] = None
 
 class EmployeeCreate(BaseModel):
     name: str
@@ -114,7 +116,8 @@ def create_task(task: TaskCreate, db: Session = Depends(get_db)):
     db_task = models.Task(
         title=task.title,
         status=task.status,
-        horse_id=task.horse_id
+        horse_id=task.horse_id,
+        employee_id=task.employee_id
     )
 
     db.add(db_task)
@@ -164,6 +167,7 @@ def update_task(
     db_task.title = task.title
     db_task.status = task.status
     db_task.horse_id = task.horse_id
+    db_task.employee_id = task.employee_id
 
     db.commit()
     db.refresh(db_task)
@@ -203,3 +207,18 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     db.refresh(db_employee)
 
     return db_employee
+
+@app.get("/employees/{employee_id}/tasks")
+def get_employee_tasks(
+    employee_id: int,
+    db: Session = Depends(get_db)
+):
+
+    employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+
+    if employee is None:
+        raise HTTPException(status_code=404, detail="Employee not found")
+
+    return employee.tasks
