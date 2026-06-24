@@ -30,6 +30,10 @@ class EmployeeCreate(BaseModel):
     name: str
     role: str
 
+class EmployeeUpdate(BaseModel):
+    name: str
+    role: str
+
 def get_db():
     db = SessionLocal()
     try:
@@ -222,3 +226,64 @@ def get_employee_tasks(
         raise HTTPException(status_code=404, detail="Employee not found")
 
     return employee.tasks
+
+@app.get("/employees/{employee_id}")
+def get_employee(
+    employee_id: int,
+    db: Session = Depends(get_db)
+):
+    employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+
+    if employee is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Employee not found"
+        )
+
+    return employee
+
+@app.put("/employees/{employee_id}")
+def update_employee(
+    employee_id: int,
+    employee: EmployeeUpdate,
+    db: Session = Depends(get_db)
+):
+    db_employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+
+    if db_employee is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Employee not found"
+        )
+
+    db_employee.name = employee.name
+    db_employee.role = employee.role
+
+    db.commit()
+    db.refresh(db_employee)
+
+    return db_employee
+
+@app.delete("/employees/{employee_id}")
+def delete_employee(
+    employee_id: int,
+    db: Session = Depends(get_db)
+):
+    employee = db.query(models.Employee).filter(
+        models.Employee.id == employee_id
+    ).first()
+
+    if employee is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Employee not found"
+        )
+
+    db.delete(employee)
+    db.commit()
+
+    return {"message": f"Employee {employee_id} deleted"}
