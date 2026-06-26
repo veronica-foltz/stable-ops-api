@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
 from app import models
-from app.schemas import EmployeeCreate, EmployeeUpdate
+from app.schemas import EmployeeCreate, EmployeeUpdate, EmployeeResponse
 
 router = APIRouter()
 
@@ -14,11 +14,11 @@ def get_db():
     finally:
         db.close()
 
-@router.get("/employees")
+@router.get("/employees", response_model=list[EmployeeResponse])
 def get_employees(db: Session = Depends(get_db)):
     return db.query(models.Employee).all()
 
-@router.post("/employees")
+@router.post("/employees", response_model=EmployeeResponse)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     db_employee = models.Employee(
         name=employee.name,
@@ -31,7 +31,7 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
 
     return db_employee
 
-@router.get("/employees/{employee_id}")
+@router.get("/employees/{employee_id}", response_model=EmployeeResponse)
 def get_employee(employee_id: int, db: Session = Depends(get_db)):
     employee = db.query(models.Employee).filter(
         models.Employee.id == employee_id
@@ -42,7 +42,7 @@ def get_employee(employee_id: int, db: Session = Depends(get_db)):
 
     return employee
 
-@router.put("/employees/{employee_id}")
+@router.put("/employees/{employee_id}", response_model=EmployeeResponse)
 def update_employee(
     employee_id: int,
     employee: EmployeeUpdate,

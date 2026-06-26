@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
 from app import models
-from app.schemas import HorseCreate
+from app.schemas import HorseCreate, HorseResponse
 
 router = APIRouter()
 
@@ -14,11 +14,11 @@ def get_db():
     finally:
         db.close()
 
-@router.get("/horses")
+@router.get("/horses", response_model=list[HorseResponse])
 def get_horses(db: Session = Depends(get_db)):
     return db.query(models.Horse).all()
 
-@router.get("/horses/{horse_id}")
+@router.get("/horses/{horse_id}", response_model=HorseResponse)
 def get_horse(horse_id: int, db: Session = Depends(get_db)):
     horse = db.query(models.Horse).filter(
         models.Horse.id == horse_id
