@@ -15,8 +15,16 @@ def get_db():
         db.close()
 
 @router.get("/tasks", response_model=list[TaskResponse])
-def get_tasks(db: Session = Depends(get_db)):
-    return db.query(models.Task).all()
+def get_tasks(
+    status: str = None,
+    db: Session = Depends(get_db)
+):
+    query = db.query(models.Task)
+
+    if status:
+        query = query.filter(models.Task.status == status)
+
+    return query.all()
 
 @router.post("/tasks", response_model=TaskResponse)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):

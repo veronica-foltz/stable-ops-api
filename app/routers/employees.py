@@ -15,8 +15,16 @@ def get_db():
         db.close()
 
 @router.get("/employees", response_model=list[EmployeeResponse])
-def get_employees(db: Session = Depends(get_db)):
-    return db.query(models.Employee).all()
+def get_employees(
+    role: str = None,
+    db: Session = Depends(get_db)
+):
+    query = db.query(models.Employee)
+
+    if role:
+        query = query.filter(models.Employee.role == role)
+
+    return query.all()
 
 @router.post("/employees", response_model=EmployeeResponse)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
