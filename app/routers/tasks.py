@@ -19,6 +19,7 @@ def get_tasks(
     status: str = None,
     employee_id: int = None,
     horse_id: int = None,
+    sort_by: str = None,
     db: Session = Depends(get_db)
 ):
     query = db.query(models.Task)
@@ -31,6 +32,12 @@ def get_tasks(
 
     if horse_id:
         query = query.filter(models.Task.horse_id == horse_id)
+
+    if sort_by == "title":
+        query = query.order_by(models.Task.title)
+
+    if sort_by == "status":
+        query = query.order_by(models.Task.status)
 
     return query.all()
 
