@@ -17,12 +17,20 @@ def get_db():
 @router.get("/tasks", response_model=list[TaskResponse])
 def get_tasks(
     status: str = None,
+    employee_id: int = None,
+    horse_id: int = None,
     db: Session = Depends(get_db)
 ):
     query = db.query(models.Task)
 
     if status:
         query = query.filter(models.Task.status == status)
+
+    if employee_id:
+        query = query.filter(models.Task.employee_id == employee_id)
+
+    if horse_id:
+        query = query.filter(models.Task.horse_id == horse_id)
 
     return query.all()
 
