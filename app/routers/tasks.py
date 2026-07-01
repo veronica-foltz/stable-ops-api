@@ -20,6 +20,8 @@ def get_tasks(
     employee_id: int = None,
     horse_id: int = None,
     sort_by: str = None,
+    skip: int = 0,
+    limit: int = 10,
     db: Session = Depends(get_db)
 ):
     query = db.query(models.Task)
@@ -39,7 +41,7 @@ def get_tasks(
     if sort_by == "status":
         query = query.order_by(models.Task.status)
 
-    return query.all()
+    return query.offset(skip).limit(limit).all()
 
 @router.post("/tasks", response_model=TaskResponse)
 def create_task(task: TaskCreate, db: Session = Depends(get_db)):
