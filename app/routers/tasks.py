@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.database import SessionLocal
@@ -19,7 +19,10 @@ def get_tasks(
     status: str = None,
     employee_id: int = None,
     horse_id: int = None,
-    sort_by: str = None,
+    sort_by: str = Query(
+        None,
+        pattern="^(title|status)$"
+    ),
     order: str = "asc",
     skip: int = 0,
     limit: int = 10,
