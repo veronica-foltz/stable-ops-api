@@ -20,6 +20,7 @@ def get_tasks(
     employee_id: int = None,
     horse_id: int = None,
     sort_by: str = None,
+    order: str = "asc",
     skip: int = 0,
     limit: int = 10,
     db: Session = Depends(get_db)
@@ -36,10 +37,16 @@ def get_tasks(
         query = query.filter(models.Task.horse_id == horse_id)
 
     if sort_by == "title":
-        query = query.order_by(models.Task.title)
+        if order == "desc":
+            query = query.order_by(models.Task.title.desc())
+        else:
+            query = query.order_by(models.Task.title.asc())
 
     if sort_by == "status":
-        query = query.order_by(models.Task.status)
+        if order == "desc":
+            query = query.order_by(models.Task.status.desc())
+        else:
+            query = query.order_by(models.Task.status.asc())
 
     return query.offset(skip).limit(limit).all()
 
