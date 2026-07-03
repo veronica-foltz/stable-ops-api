@@ -23,9 +23,12 @@ def get_tasks(
         None,
         pattern="^(title|status)$"
     ),
-    order: str = "asc",
-    skip: int = 0,
-    limit: int = 10,
+    order: str = Query(
+        "asc",
+        pattern="^(asc|desc)$"
+    ),
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1, le=100),
     db: Session = Depends(get_db)
 ):
     query = db.query(models.Task)
