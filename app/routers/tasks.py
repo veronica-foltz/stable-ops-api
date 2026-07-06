@@ -5,6 +5,8 @@ from app.database import SessionLocal
 from app import models
 from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 
+from app.auth import get_current_user
+
 router = APIRouter()
 
 def get_db():
@@ -57,7 +59,11 @@ def get_tasks(
     return query.offset(skip).limit(limit).all()
 
 @router.post("/tasks", response_model=TaskResponse)
-def create_task(task: TaskCreate, db: Session = Depends(get_db)):
+def create_task(
+    task: TaskCreate,
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
+):
     db_task = models.Task(
         title=task.title,
         status=task.status,
