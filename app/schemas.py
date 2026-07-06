@@ -50,3 +50,7 @@ class EmployeeCreate(BaseModel):
 class EmployeeUpdate(BaseModel):
     name: str
     role: str
+
+class UserCreate(BaseModel):
+    username: str
+    password: str

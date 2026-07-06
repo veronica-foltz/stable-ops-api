@@ -9,6 +9,7 @@ from app import models
 from app.routers import horses
 from app.routers import tasks
 from app.routers import employees
+from app.routers import users
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -16,6 +17,7 @@ app = FastAPI()
 app.include_router(horses.router)
 app.include_router(tasks.router)
 app.include_router(employees.router)
+app.include_router(users.router)
 
 class HorseCreate(BaseModel):
     name: str
