@@ -6,6 +6,9 @@ from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 
+from app.database import SessionLocal
+from app import models
+
 pwd_context = CryptContext(
     schemes=["bcrypt"],
     deprecated="auto"
@@ -52,7 +55,19 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         if username is None:
             raise HTTPException(status_code=401, detail="Invalid token")
 
-        return username
+        db = SessionLocal()
+
+        user = db.query(models.User).filter(
+            models.User.username == username
+        ).first()
+
+        if user is None:
+            raise HTTPException(
+                status_code=401,
+                    detail="User not found"
+            )       
+
+        return user
 
     except Exception:
         raise HTTPException(status_code=401, detail="Invalid token")
