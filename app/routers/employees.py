@@ -28,9 +28,17 @@ def get_employees(
     return query.all()
 
 @router.post("/employees", response_model=EmployeeResponse)
-def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db),
-        current_user = Depends(get_current_user)
-    ):
+def create_employee(
+    employee: EmployeeCreate, 
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+ ):
+    if current_user.role not in ["manager", "admin"]:
+        raise HTTPException(
+            status_code=403,
+            detail="Managers or admins only"
+        )
+
     db_employee = models.Employee(
         name=employee.name,
         role=employee.role
@@ -76,20 +84,28 @@ def update_employee(
     return db_employee
 
 @router.delete("/employees/{employee_id}")
-def delete_employee(employee_id: int, db: Session = Depends(get_db),
+def delete_employee(
+        employee_id: int, 
+        db: Session = Depends(get_db),
         current_user = Depends(get_current_user)
     ):
-    employee = db.query(models.Employee).filter(
-        models.Employee.id == employee_id
-    ).first()
+        if current_user.role != "admin":
+            raise HTTPException(
+                status_code=403,
+                detail="Admins only"
+            )
 
-    if employee is None:
-        raise HTTPException(status_code=404, detail="Employee not found")
+        employee = db.query(models.Employee).filter(
+            models.Employee.id == employee_id
+        ).first()
 
-    db.delete(employee)
-    db.commit()
+        if employee is None:
+            raise HTTPException(status_code=404, detail="Employee not found")
 
-    return {"message": f"Employee {employee_id} deleted"}
+        db.delete(employee)
+        db.commit()
+
+        return {"message": f"Employee {employee_id} deleted"}
 
 @router.get("/employees/{employee_id}/tasks")
 def get_employee_tasks(

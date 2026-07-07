@@ -21,7 +21,8 @@ def get_db():
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = models.User(
         username=user.username,
-        hashed_password=hash_password(user.password)
+        hashed_password=hash_password(user.password),
+        role=user.role
     )
 
     db.add(db_user)
