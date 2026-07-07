@@ -91,7 +91,8 @@ def get_task(task_id: int, db: Session = Depends(get_db)):
 def update_task(
     task_id: int,
     task: TaskUpdate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
 ):
 
     db_task = db.query(models.Task).filter(
@@ -113,7 +114,11 @@ def update_task(
     return db_task
 
 @router.delete("/tasks/{task_id}")
-def delete_task(task_id: int, db: Session = Depends(get_db)):
+def delete_task(
+    task_id: int,
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user)
+):
     task = db.query(models.Task).filter(
         models.Task.id == task_id
     ).first()
