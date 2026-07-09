@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.auth import get_current_user
+from app.auth import get_current_user, require_admin, require_manager_or_admin
 
 from app.database import SessionLocal
 from app import models
@@ -31,13 +31,8 @@ def get_employees(
 def create_employee(
     employee: EmployeeCreate, 
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_manager_or_admin)
  ):
-    if current_user.role not in ["manager", "admin"]:
-        raise HTTPException(
-            status_code=403,
-            detail="Managers or admins only"
-        )
 
     db_employee = models.Employee(
         name=employee.name,
@@ -87,13 +82,8 @@ def update_employee(
 def delete_employee(
         employee_id: int, 
         db: Session = Depends(get_db),
-        current_user = Depends(get_current_user)
+        current_user = Depends(require_admin)
     ):
-        if current_user.role != "admin":
-            raise HTTPException(
-                status_code=403,
-                detail="Admins only"
-            )
 
         employee = db.query(models.Employee).filter(
             models.Employee.id == employee_id
