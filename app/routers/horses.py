@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.auth import get_current_user
+from app.auth import get_current_user, require_admin, require_manager_or_admin
 
 from app.database import SessionLocal
 from app import models
@@ -33,7 +33,7 @@ def get_horse(horse_id: int, db: Session = Depends(get_db)):
 @router.post("/horses")
 def create_horse(horse: HorseCreate, 
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_manager_or_admin)
     ):
 
     db_horse = models.Horse(
@@ -52,7 +52,7 @@ def update_horse(
     horse_id: int,
     horse: HorseCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_manager_or_admin)
 ):
     db_horse = db.query(models.Horse).filter(
         models.Horse.id == horse_id
@@ -73,7 +73,7 @@ def update_horse(
 def delete_horse(
     horse_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_admin)
 ):
     horse = db.query(models.Horse).filter(
         models.Horse.id == horse_id
