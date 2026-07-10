@@ -20,6 +20,8 @@ class Task(Base):
 
     horse_id = Column(Integer, ForeignKey("horses.id"))
 
+    created_by = Column(Integer, nullable=True)
+
     horse = relationship("Horse", back_populates="tasks")
 
     employee_id = Column(

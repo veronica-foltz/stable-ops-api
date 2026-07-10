@@ -68,7 +68,8 @@ def create_task(
         title=task.title,
         status=task.status,
         horse_id=task.horse_id,
-        employee_id=task.employee_id
+        employee_id=task.employee_id,
+        created_by=current_user.id
     )
 
     db.add(db_task)
@@ -102,6 +103,15 @@ def update_task(
 
     if db_task is None:
         raise HTTPException(status_code=404, detail="Task not found")
+    
+    if (
+        current_user.role == "employee"
+        and db_task.created_by != current_user.id
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="You can only modify your own tasks"
+     )
 
     db_task.title = task.title
     db_task.status = task.status
@@ -117,7 +127,7 @@ def update_task(
 def delete_task(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(require_manager_or_admin)
+    current_user = Depends(get_current_user)
 ):
     task = db.query(models.Task).filter(
         models.Task.id == task_id
@@ -125,6 +135,15 @@ def delete_task(
 
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
+    
+    if (
+        current_user.role == "employee"
+        and task.created_by != current_user.id
+    ):
+        raise HTTPException(
+            status_code=403,
+            detail="You can only delete your own tasks"
+        )
 
     db.delete(task)
     db.commit()

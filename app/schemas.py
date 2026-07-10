@@ -19,6 +19,7 @@ class TaskResponse(BaseModel):
     status: str
     horse_id: Optional[int] = None
     employee_id: Optional[int] = None
+    created_by: Optional[int] = None
 
     class Config:
         from_attributes = True
