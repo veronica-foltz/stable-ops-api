@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional
 
+from datetime import datetime
+
 class HorseCreate(BaseModel):
     name: str
     breed: str
@@ -20,6 +22,9 @@ class TaskResponse(BaseModel):
     horse_id: Optional[int] = None
     employee_id: Optional[int] = None
     created_by: Optional[int] = None
+
+    created_at: datetime
+    updated_at: datetime
 
     class Config:
         from_attributes = True

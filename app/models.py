@@ -2,6 +2,9 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 
+from sqlalchemy import DateTime
+from datetime import datetime
+
 class Horse(Base):
     __tablename__ = "horses"
 
@@ -21,6 +24,14 @@ class Task(Base):
     horse_id = Column(Integer, ForeignKey("horses.id"))
 
     created_by = Column(Integer, nullable=True)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+    updated_at = Column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow
+    )
 
     horse = relationship("Horse", back_populates="tasks")
 
