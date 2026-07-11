@@ -8,7 +8,7 @@ class HorseCreate(BaseModel):
     breed: str
 
 class HorseResponse(BaseModel):
-    id: int
+    id: int 
     name: str
     breed: str
 
