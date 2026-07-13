@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app import models
 from app.schemas import UserCreate
-from app.auth import hash_password, verify_password, create_access_token
+from app.auth import hash_password, verify_password, create_access_token, get_current_user
 
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -56,4 +56,14 @@ def login_user(
     return {
         "access_token": access_token,
         "token_type": "bearer"
+    }
+
+@router.get("/me")
+def get_me(
+    current_user = Depends(get_current_user)
+):
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "role": current_user.role
     }
