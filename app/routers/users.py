@@ -102,6 +102,7 @@ def delete_user(
     current_user = Depends(require_admin)
 
 ):
+    
     user = db.query(models.User).filter(
         models.User.id == user_id
     ).first()
