@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app import models
 from app.schemas import UserCreate
-from app.auth import hash_password, verify_password, create_access_token, get_current_user
+from app.auth import hash_password, verify_password, create_access_token, get_current_user, require_admin
 
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -67,3 +67,19 @@ def get_me(
         "username": current_user.username,
         "role": current_user.role
     }
+
+@router.get("/users")
+def get_users(
+    db: Session = Depends(get_db),
+    current_user = Depends(require_admin)
+):
+    users = db.query(models.User).all()
+
+    return [
+        {
+            "id": user.id,
+            "username": user.username,
+            "role": user.role
+        }
+        for user in users
+    ]
