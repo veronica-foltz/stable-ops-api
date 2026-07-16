@@ -93,3 +93,14 @@ def require_manager_or_admin(
         )
 
     return current_user
+
+def require_non_guest(
+    current_user = Depends(get_current_user)
+):
+    if current_user.role == "guest":
+        raise HTTPException(
+            status_code=403,
+            detail="Guest users have read-only access"
+        )
+
+    return current_user

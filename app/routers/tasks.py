@@ -5,7 +5,7 @@ from app.database import SessionLocal
 from app import models
 from app.schemas import TaskCreate, TaskUpdate, TaskResponse
 
-from app.auth import get_current_user, require_admin, require_manager_or_admin
+from app.auth import get_current_user, require_non_guest, require_admin, require_manager_or_admin
 
 router = APIRouter()
 
@@ -62,7 +62,7 @@ def get_tasks(
 def create_task(
     task: TaskCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_non_guest)
 ):
     db_task = models.Task(
         title=task.title,
@@ -93,7 +93,7 @@ def update_task(
     task_id: int,
     task: TaskUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(get_current_user)
+    current_user = Depends(require_non_guest)
 ):
 
     db_task = db.query(models.Task).filter(
