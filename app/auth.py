@@ -101,6 +101,7 @@ def require_non_guest(
         raise HTTPException(
             status_code=403,
             detail="Guest users have read-only access"
+            detail="Guest users have read-only access"
         )
 
     return current_user
