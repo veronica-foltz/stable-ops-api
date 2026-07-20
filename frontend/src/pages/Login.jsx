@@ -5,13 +5,20 @@ import "../styles/Login.css";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    console.log("Username:", username);
+    console.log("Password:", password);
+  };
+
   return (
     <div className="login-container">
       <h1>Stable Ops</h1>
 
       <h2>Login</h2>
 
-      <form>
+      <form onSubmit={handleLogin}>
         <div>
           <label>Username</label>
           <br />
