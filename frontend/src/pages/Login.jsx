@@ -8,9 +8,20 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    console.log("Username:", username);
-    console.log("Password:", password);
-  };
+    try {
+        const formData = new URLSearchParams();
+        formData.append("username", username);
+        formData.append("password", password);
+
+        const response = await api.post("/login", formData);
+
+        localStorage.setItem("access_token", response.data.access_token);
+
+        console.log("Login successful!");   
+    } catch (error) {
+        console.error(error.response?.data || error.message);
+    }
+};
 
   return (
     <div className="login-container">
