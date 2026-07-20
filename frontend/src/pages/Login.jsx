@@ -1,6 +1,10 @@
+import { useState } from "react";
+import api from "../services/api";
 import "../styles/Login.css";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="login-container">
       <h1>Stable Ops</h1>
@@ -11,7 +15,11 @@ function Login() {
         <div>
           <label>Username</label>
           <br />
-          <input type="text" />
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
 
         <br />
@@ -19,7 +27,11 @@ function Login() {
         <div>
           <label>Password</label>
           <br />
-          <input type="password" />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
 
         <br />
