@@ -5,26 +5,34 @@ import "../styles/Dashboard.css";
 
 function Dashboard() {
     const [horses, setHorses] = useState([]);
+    const [employees, setEmployees] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        const fetchHorses = async () => {
+        const fetchDashboardData = async () => {
             try {
                 const token = localStorage.getItem("access_token");
 
-                const response = await api.get("/horses", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const headers = {
+                    Authorization: `Bearer ${token}`,
+                };
 
-                setHorses(response.data);
+                const [horsesResponse, employeesResponse, tasksResponse] =
+                    await Promise.all([
+                        api.get("/horses", { headers }),
+                        api.get("/employees", { headers }),
+                        api.get("/tasks", { headers }),
+                    ]);
+
+                setHorses(horsesResponse.data);
+                setEmployees(employeesResponse.data);
+                setTasks(tasksResponse.data);
             } catch (error) {
                 console.error(error.response?.data || error.message);
             }
         };
 
-        fetchHorses();
-    }, []);
+        fetchDashboardData();
 
     return (
         <div className="dashboard">
@@ -38,6 +46,20 @@ function Dashboard() {
                         {horses.length}
                     </div>
                 </div>
+            </div>
+
+            <div className="card">
+                <h2>Employees</h2>
+                    <div className="card-number">
+                        {employees.length}
+                    </div>
+            </div>
+
+            <div className="card">
+                <h2>Tasks</h2>
+                    <div className="card-number">
+                        {tasks.length}
+                    </div>
             </div>
 
             <h2>Horses</h2>
