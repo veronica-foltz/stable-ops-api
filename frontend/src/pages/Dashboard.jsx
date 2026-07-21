@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
+import "../styles/Dashboard.css";
+
 function Dashboard() {
     const [horses, setHorses] = useState([]);
 
@@ -25,9 +27,18 @@ function Dashboard() {
     }, []);
 
     return (
-        <div>
+        <div className="dashboard">
             <h1>Welcome to Stable Ops!</h1>
             <p>You are successfully logged in.</p>
+
+            <div className="cards">
+                <div className="card">
+                    <h2>🐴 Horses</h2>
+                    <div className="card-number">
+                        {horses.length}
+                    </div>
+                </div>
+            </div>
 
             <h2>Horses</h2>
 
