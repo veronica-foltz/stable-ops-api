@@ -80,6 +80,24 @@ function Dashboard() {
                     </ul>
                     )}
             </div>
+
+            <div className="card">
+                <h2>Recent Tasks</h2>
+
+                {tasks.length === 0 ? (
+                    <p>No tasks found.</p>
+                ) : (
+                    <ul>
+                        {tasks.slice(0, 5).map((task) => (
+                            <li key={task.id}>
+                                <strong>{task.title}</strong>
+                                <br />
+                                <span>{task.status}</span>
+                            </li>
+                         ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 }
