@@ -7,6 +7,7 @@ function Dashboard() {
     const [horses, setHorses] = useState([]);
     const [employees, setEmployees] = useState([]);
     const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -30,11 +31,17 @@ function Dashboard() {
                 setTasks(tasksResponse.data);
             } catch (error) {
                 console.error(error.response?.data || error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchDashboardData();
     }, []);
+
+    if (loading) {
+        return <p>Loading dashboard...</p>;
+    }
 
     return (
         <div className="dashboard">
