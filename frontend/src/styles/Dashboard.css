@@ -38,3 +38,22 @@
     font-weight: bold;
     color: #60a5fa;
 }
+
+.card ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0;
+}
+
+.card li {
+    padding: 10px 0;
+    border-bottom: 1px solid #374151;
+}
+
+.card li:last-child {
+    border-bottom: none;
+}
+
+.card strong {
+    color: #60a5fa;
+}

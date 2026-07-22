@@ -63,19 +63,22 @@ function Dashboard() {
                     </div>
             </div>
 
-            <h2>Horses</h2>
+            
+            <div className="card">
+                <h2>Recent Horses</h2>
 
-            {horses.length === 0 ? (
-                <p>No horses found.</p>
-            ) : (
-                <ul>
-                    {horses.map((horse) => (
-                        <li key={horse.id}>
-                            {horse.name} — {horse.breed}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                {horses.length === 0 ? (
+                    <p>No horses found.</p>
+                ) : (
+                    <ul>
+                        {horses.map((horse) => (
+                            <li key={horse.id}>
+                                <strong>{horse.name}</strong> – {horse.breed}
+                            </li>
+                        ))}
+                    </ul>
+                    )}
+            </div>
         </div>
     );
 }
