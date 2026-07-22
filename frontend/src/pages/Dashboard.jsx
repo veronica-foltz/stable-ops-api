@@ -34,6 +34,7 @@ function Dashboard() {
         };
 
         fetchDashboardData();
+    }, []);
 
     return (
         <div className="dashboard">
