@@ -122,3 +122,35 @@
     font-weight: 600;
     color: var(--muted);
 }
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+}
+
+.search-icon {
+    flex-shrink: 0;
+    color: var(--muted);
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0;
+    color: var(--text);
+    background: transparent;
+    border: none;
+    outline: none;
+    font: inherit;
+}
+
+.search-bar input::placeholder {
+    color: var(--muted);
+}

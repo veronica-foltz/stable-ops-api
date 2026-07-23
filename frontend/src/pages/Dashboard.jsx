@@ -8,6 +8,7 @@ import { GiHorseHead } from "react-icons/gi";
 import { FaUserTie, FaClipboardList } from "react-icons/fa";
 
 import Header from "../components/Header";
+import { FaSearch } from "react-icons/fa";
 
 function Dashboard() {
     const [horses, setHorses] = useState([]);
@@ -52,6 +53,15 @@ function Dashboard() {
     return (
         <div className="dashboard">
             <Header />
+
+            <div className="search-bar">
+                <FaSearch className="search-icon" />
+
+                <input
+                    type="text"
+                    placeholder="Search horses, employees, or tasks..."
+                />
+            </div>
 
             <div className="cards">
                 <SummaryCard
