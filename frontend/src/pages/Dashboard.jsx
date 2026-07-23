@@ -59,19 +59,19 @@ function Dashboard() {
                     title="Horses"
                     number={horses.length}
                 />
+
+                <SummaryCard
+                    icon={<FaUserTie />}
+                    title="Employees"
+                    number={employees.length}
+                />
+
+                <SummaryCard
+                    icon={<FaClipboardList />}
+                    title="Tasks"
+                    number={tasks.length}
+                />
             </div>
-
-            <SummaryCard
-                icon={<FaUserTie />}
-                title="Employees"
-                number={employees.length}
-            />
-
-            <SummaryCard
-                icon={<FaClipboardList />}
-                title="Tasks"
-                number={tasks.length}
-            />
 
             <div className="card">
                 <h2>Recent Horses</h2>
