@@ -7,6 +7,8 @@ import SummaryCard from "../components/SummaryCard";
 import { GiHorseHead } from "react-icons/gi";
 import { FaUserTie, FaClipboardList } from "react-icons/fa";
 
+import Header from "../components/Header";
+
 function Dashboard() {
     const [horses, setHorses] = useState([]);
     const [employees, setEmployees] = useState([]);
@@ -49,8 +51,7 @@ function Dashboard() {
 
     return (
         <div className="dashboard">
-            <h1>Welcome to Stable Ops!</h1>
-            <p>You are successfully logged in.</p>
+            <Header />
 
             <div className="cards">
                 <SummaryCard
