@@ -79,3 +79,19 @@
 .card span {
     color: var(--muted);
 }
+
+.summary-icon {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background: #e8eefc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+
+.summary-card h2 {
+    margin: 0 0 8px;
+}

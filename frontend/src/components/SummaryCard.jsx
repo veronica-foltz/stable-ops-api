@@ -1,6 +1,10 @@
-function SummaryCard({ title, number }) {
+function SummaryCard({ icon, title, number }) {
     return (
-        <div className="card">
+        <div className="card summary-card">
+            <div className="summary-icon">
+                {icon}
+            </div>
+
             <h2>{title}</h2>
 
             <div className="card-number">

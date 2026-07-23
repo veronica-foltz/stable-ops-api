@@ -51,18 +51,21 @@ function Dashboard() {
 
             <div className="cards">
                 <SummaryCard
-                    title="🐴 Horses"
+                    icon="🐴"
+                    title="Horses"
                     number={horses.length}
                 />
             </div>
 
             <SummaryCard
-                title="👷 Employees"
+                icon="👷"
+                title="Employees"
                 number={employees.length}
             />
 
             <SummaryCard
-                title="📋 Tasks"
+                icon="📋"
+                title="Tasks"
                 number={tasks.length}
             />
 
