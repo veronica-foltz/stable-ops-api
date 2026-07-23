@@ -56,21 +56,16 @@ function Dashboard() {
                 />
             </div>
 
-            <div className="card">
-                <h2>Employees</h2>
-                    <div className="card-number">
-                        {employees.length}
-                    </div>
-            </div>
+            <SummaryCard
+                title="👷 Employees"
+                number={employees.length}
+            />
 
-            <div className="card">
-                <h2>Tasks</h2>
-                    <div className="card-number">
-                        {tasks.length}
-                    </div>
-            </div>
+            <SummaryCard
+                title="📋 Tasks"
+                number={tasks.length}
+            />
 
-            
             <div className="card">
                 <h2>Recent Horses</h2>
 
