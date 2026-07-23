@@ -4,6 +4,9 @@ import api from "../services/api";
 import "../styles/Dashboard.css";
 import SummaryCard from "../components/SummaryCard";
 
+import { GiHorseHead } from "react-icons/gi";
+import { FaUserTie, FaClipboardList } from "react-icons/fa";
+
 function Dashboard() {
     const [horses, setHorses] = useState([]);
     const [employees, setEmployees] = useState([]);
@@ -51,20 +54,20 @@ function Dashboard() {
 
             <div className="cards">
                 <SummaryCard
-                    icon="🐴"
+                    icon={<GiHorseHead />}
                     title="Horses"
                     number={horses.length}
                 />
             </div>
 
             <SummaryCard
-                icon="👷"
+                icon={<FaUserTie />}
                 title="Employees"
                 number={employees.length}
             />
 
             <SummaryCard
-                icon="📋"
+                icon={<FaClipboardList />}
                 title="Tasks"
                 number={tasks.length}
             />
