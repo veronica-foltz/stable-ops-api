@@ -79,7 +79,7 @@ function Dashboard() {
                 <SummaryCard
                     icon={<GiHorseHead />}
                     title="Horses"
-                    number={horses.length}
+                    number={filteredHorses.length}
                 />
 
                 <SummaryCard
@@ -91,7 +91,7 @@ function Dashboard() {
                 <SummaryCard
                     icon={<FaClipboardList />}
                     title="Tasks"
-                    number={tasks.length}
+                    number={filteredTasks.length}
                 />
             </div>
 
