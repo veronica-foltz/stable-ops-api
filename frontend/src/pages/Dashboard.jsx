@@ -25,6 +25,10 @@ function Dashboard() {
         task.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const filteredEmployees = employees.filter((employee) =>
+        employee.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -85,7 +89,7 @@ function Dashboard() {
                 <SummaryCard
                     icon={<FaUserTie />}
                     title="Employees"
-                    number={employees.length}
+                    number={filteredEmployees.length}
                 />
 
                 <SummaryCard
