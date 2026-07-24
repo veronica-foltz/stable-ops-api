@@ -17,6 +17,10 @@ function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const filteredHorses = horses.filter((horse) =>
+        horse.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -65,7 +69,6 @@ function Dashboard() {
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
 
-                <p>Searching for: {searchTerm}</p>
             </div>
 
             <div className="cards">
@@ -91,11 +94,11 @@ function Dashboard() {
             <div className="card">
                 <h2>Recent Horses</h2>
 
-                {horses.length === 0 ? (
+                {filteredHorses.length === 0 ? (
                     <p>No horses found.</p>
                 ) : (
                     <ul>
-                        {horses.map((horse) => (
+                        {filteredHorses.map((horse) => (
                             <li key={horse.id}>
                                 <strong>{horse.name}</strong> – {horse.breed}
                             </li>
