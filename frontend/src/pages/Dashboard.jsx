@@ -21,6 +21,10 @@ function Dashboard() {
         horse.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const filteredTasks = tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -110,17 +114,17 @@ function Dashboard() {
             <div className="card">
                 <h2>Recent Tasks</h2>
 
-                {tasks.length === 0 ? (
-                    <p>No tasks found.</p>
+                {filteredTasks.length === 0 ? (
+                    <p>No matching tasks found.</p>
                 ) : (
                     <ul>
-                        {tasks.slice(0, 5).map((task) => (
+                        {filteredTasks.slice(0, 5).map((task) => (
                             <li key={task.id}>
                                 <strong>{task.title}</strong>
                                 <br />
                                 <span>{task.status}</span>
                             </li>
-                         ))}
+                        ))}
                     </ul>
                 )}
             </div>
