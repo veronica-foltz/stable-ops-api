@@ -15,6 +15,7 @@ function Dashboard() {
     const [employees, setEmployees] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -60,7 +61,11 @@ function Dashboard() {
                 <input
                     type="text"
                     placeholder="Search horses, employees, or tasks..."
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
                 />
+
+                <p>Searching for: {searchTerm}</p>
             </div>
 
             <div className="cards">
