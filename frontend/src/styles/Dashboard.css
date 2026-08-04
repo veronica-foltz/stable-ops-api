@@ -173,3 +173,38 @@
 .navigation a:hover {
     color: var(--primary);
 }
+
+.page-section {
+    margin-top: 30px;
+}
+
+.page-heading {
+    margin-bottom: 24px;
+}
+
+.page-heading h1 {
+    margin-bottom: 6px;
+}
+
+.page-heading p {
+    color: var(--muted);
+}
+
+.horse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.horse-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.horse-card h2 {
+    margin-bottom: 8px;
+    color: var(--primary);
+}

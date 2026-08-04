@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
+import Header from "../components/Header";
+import Navigation from "../components/Navigation";
+import "../styles/Dashboard.css";
+
 function Horses() {
     const [horses, setHorses] = useState([]);
 
@@ -25,18 +29,33 @@ function Horses() {
     }, []);
 
     return (
-        <div className="page">
-            <h1>Horses</h1>
+    <div className="dashboard">
+        <Header />
+        <Navigation />
 
-            <ul>
-                {horses.map((horse) => (
-                    <li key={horse.id}>
-                        <strong>{horse.name}</strong> – {horse.breed}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+        <section className="page-section">
+            <div className="page-heading">
+                <div>
+                    <h1>Horses</h1>
+                    <p>Manage all horses in your stable.</p>
+                </div>
+            </div>
+
+            {horses.length === 0 ? (
+                <p>No horses found.</p>
+            ) : (
+                <div className="horse-grid">
+                    {horses.map((horse) => (
+                        <div className="horse-card" key={horse.id}>
+                            <h2>{horse.name}</h2>
+                            <p>{horse.breed}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </section>
+    </div>
+);
 }
 
 export default Horses;
