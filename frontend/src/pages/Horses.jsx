@@ -37,8 +37,12 @@ function Horses() {
             <div className="page-heading">
                 <div>
                     <h1>Horses</h1>
-                    <p>Manage all horses in your stable.</p>
+                     <p>Manage all horses in your stable.</p>
                 </div>
+
+                <button className="primary-button">
+                    + Add Horse
+                </button>
             </div>
 
             {horses.length === 0 ? (
