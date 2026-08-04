@@ -9,6 +9,11 @@ function Horses() {
     const [horses, setHorses] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
+    
+    const [newHorse, setNewHorse] = useState({
+        name: "",
+        breed: "",
+    });
 
     useEffect(() => {
         const fetchHorses = async () => {
@@ -85,7 +90,35 @@ function Horses() {
                 <div className="modal-content">
                     <h2>Add Horse</h2>
 
-                    <p>The form will go here.</p>
+                    <div className="form-group">
+                        <label htmlFor="horse-name">Name</label>
+                        <input
+                            id="horse-name"
+                            type="text"
+                            value={newHorse.name}
+                            onChange={(e) =>
+                                setNewHorse({
+                                    ...newHorse,
+                                    name: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="horse-breed">Breed</label>
+                        <input
+                            id="horse-breed"
+                            type="text"
+                            value={newHorse.breed}
+                            onChange={(e) =>
+                                setNewHorse({
+                                    ...newHorse,
+                                    breed: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
 
                     <button
                         className="primary-button"
