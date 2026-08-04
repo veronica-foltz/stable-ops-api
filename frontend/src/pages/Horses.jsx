@@ -8,6 +8,7 @@ import "../styles/Dashboard.css";
 function Horses() {
     const [horses, setHorses] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const fetchHorses = async () => {
@@ -45,7 +46,10 @@ function Horses() {
                      <p>Manage all horses in your stable.</p>
                 </div>
 
-                <button className="primary-button">
+                <button
+                    className="primary-button"
+                    onClick={() => setShowModal(true)}
+                >
                     + Add Horse
                 </button>
             </div>
@@ -75,6 +79,24 @@ function Horses() {
                 </>
             )}
         </section>
+
+        {showModal && (
+            <div className="modal">
+                <div className="modal-content">
+                    <h2>Add Horse</h2>
+
+                    <p>The form will go here.</p>
+
+                    <button
+                        className="primary-button"
+                        onClick={() => setShowModal(false)}
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        )}    
+
     </div>
 );
 }
