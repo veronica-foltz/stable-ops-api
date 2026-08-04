@@ -7,6 +7,7 @@ import "../styles/Dashboard.css";
 
 function Horses() {
     const [horses, setHorses] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         const fetchHorses = async () => {
@@ -28,6 +29,10 @@ function Horses() {
         fetchHorses();
     }, []);
 
+    const filteredHorses = horses.filter((horse) =>
+        horse.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
     <div className="dashboard">
         <Header />
@@ -48,14 +53,26 @@ function Horses() {
             {horses.length === 0 ? (
                 <p>No horses found.</p>
             ) : (
+                <>
+
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Search horses..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+
                 <div className="horse-grid">
-                    {horses.map((horse) => (
+                    {filteredHorses.map((horse) => (
                         <div className="horse-card" key={horse.id}>
                             <h2>{horse.name}</h2>
                             <p>{horse.breed}</p>
                         </div>
                     ))}
                 </div>
+                </>
             )}
         </section>
     </div>
