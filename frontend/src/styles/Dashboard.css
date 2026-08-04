@@ -154,3 +154,22 @@
 .search-bar input::placeholder {
     color: var(--muted);
 }
+
+.navigation {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.navigation a {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.navigation a:hover {
+    color: var(--primary);
+}

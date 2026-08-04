@@ -10,6 +10,8 @@ import { FaUserTie, FaClipboardList } from "react-icons/fa";
 import Header from "../components/Header";
 import { FaSearch } from "react-icons/fa";
 
+import Navigation from "../components/Navigation";
+
 function Dashboard() {
     const [horses, setHorses] = useState([]);
     const [employees, setEmployees] = useState([]);
@@ -66,6 +68,8 @@ function Dashboard() {
     return (
         <div className="dashboard">
             <Header />
+
+            <Navigation />
 
             <div className="search-bar">
                 <FaSearch className="search-icon" />
