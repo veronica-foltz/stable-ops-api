@@ -266,3 +266,19 @@
     background: white;
     font: inherit;
 }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.secondary-button {
+    background: white;
+    border: 1px solid #CBD5E1;
+    color: #475569;
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+}

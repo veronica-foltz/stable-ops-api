@@ -119,13 +119,18 @@ function Horses() {
                             }
                         />
                     </div>
-
+                <div className="modal-actions">
                     <button
-                        className="primary-button"
+                        className="secondary-button"
                         onClick={() => setShowModal(false)}
                     >
-                        Close
+                        Cancel
                     </button>
+
+                    <button className="primary-button">
+                        Save Horse
+                    </button>
+                </div>
                 </div>
             </div>
         )}    
