@@ -36,6 +36,12 @@ function Horses() {
     }, []);
 
     async function handleAddHorse() {
+        
+        if (!newHorse.name.trim() || !newHorse.breed.trim()) {
+            alert("Please enter both a horse name and breed.");
+            return;
+        }
+        
         try {
 
             const token = localStorage.getItem("access_token");
