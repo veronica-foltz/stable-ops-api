@@ -71,6 +71,29 @@ function Horses() {
         }
     }
 
+    async function handleDeleteHorse(horseId) {
+        try {
+            const token = localStorage.getItem("access_token");
+
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+
+            await api.delete(`/horses/${horseId}`, {
+                headers,
+            });
+
+            const response = await api.get("/horses", {
+                headers,
+        });
+
+            setHorses(response.data);
+
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        }
+    }
+
     const filteredHorses = horses.filter((horse) =>
         horse.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
