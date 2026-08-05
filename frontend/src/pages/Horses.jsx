@@ -35,6 +35,36 @@ function Horses() {
         fetchHorses();
     }, []);
 
+    async function handleAddHorse() {
+        try {
+
+            const token = localStorage.getItem("access_token");
+
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+
+            await api.post("/horses", newHorse, {
+                headers,
+            });
+
+            const response = await api.get("/horses", {
+                headers,
+            });
+
+            setHorses(response.data);
+
+            setNewHorse({
+                name: "",
+                breed: "",
+            });
+
+            setShowModal(false);
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        }
+    }
+
     const filteredHorses = horses.filter((horse) =>
         horse.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -127,7 +157,9 @@ function Horses() {
                         Cancel
                     </button>
 
-                    <button className="primary-button">
+                    <button className="primary-button"
+                        onClick={handleAddHorse}
+                    >
                         Save Horse
                     </button>
                 </div>
