@@ -138,6 +138,11 @@ function Horses() {
                                     name: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleAddHorse();
+                                }
+                            }}
                         />
                     </div>
 
@@ -153,6 +158,11 @@ function Horses() {
                                     breed: e.target.value,
                                 })
                             }
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    handleAddHorse();
+                                }
+                            }}
                         />
                     </div>
                 <div className="modal-actions">
