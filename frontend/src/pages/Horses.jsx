@@ -78,6 +78,14 @@ function Horses() {
     }
 
     async function handleDeleteHorse(horseId) {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this horse?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+        
         try {
             const token = localStorage.getItem("access_token");
 
