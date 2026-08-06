@@ -9,6 +9,7 @@ function Horses() {
     const [horses, setHorses] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [editingHorse, setEditingHorse] = useState(null);
     
     const [newHorse, setNewHorse] = useState({
         name: "",
@@ -36,23 +37,27 @@ function Horses() {
     }, []);
 
     async function handleAddHorse() {
-        
         if (!newHorse.name.trim() || !newHorse.breed.trim()) {
             alert("Please enter both a horse name and breed.");
             return;
         }
-        
-        try {
 
+        try {
             const token = localStorage.getItem("access_token");
 
             const headers = {
                 Authorization: `Bearer ${token}`,
             };
 
-            await api.post("/horses", newHorse, {
-                headers,
-            });
+            if (editingHorse) {
+                await api.put(`/horses/${editingHorse.id}`, newHorse, {
+                    headers,
+                });
+            } else {
+                await api.post("/horses", newHorse, {
+                    headers,
+                });
+            }
 
             const response = await api.get("/horses", {
                 headers,
@@ -65,6 +70,7 @@ function Horses() {
                 breed: "",
             });
 
+            setEditingHorse(null);
             setShowModal(false);
         } catch (error) {
             console.error(error.response?.data || error.message);
@@ -141,6 +147,16 @@ function Horses() {
                             <div className="card-actions">
                                 <button
                                     className="secondary-button"
+                                    onClick={() => {
+                                        setEditingHorse(horse);
+
+                                        setNewHorse({
+                                            name: horse.name,
+                                            breed: horse.breed,
+                                        });
+
+                                        setShowModal(true);
+                                    }}
                                 >
                                     Edit
                                 </button>
@@ -162,7 +178,7 @@ function Horses() {
         {showModal && (
             <div className="modal">
                 <div className="modal-content">
-                    <h2>Add Horse</h2>
+                    <h2>{editingHorse ? "Edit Horse" : "Add Horse"}</h2>
 
                     <div className="form-group">
                         <label htmlFor="horse-name">Name</label>
@@ -211,10 +227,20 @@ function Horses() {
                         Cancel
                     </button>
 
-                    <button className="primary-button"
-                        onClick={handleAddHorse}
+                    <button
+                        className="primary-button"
+                        onClick={() => {
+                            setEditingHorse(null);
+
+                            setNewHorse({
+                                name: "",
+                                breed: "",
+                            });
+
+                            setShowModal(true);
+                        }}
                     >
-                        Save Horse
+                        + Add Horse
                     </button>
                 </div>
                 </div>
