@@ -132,8 +132,11 @@ function Horses() {
                 </button>
             </div>
 
-            {horses.length === 0 ? (
-                <p>No horses found.</p>
+            {filteredHorses.length === 0 ? (
+                <div className="empty-state">
+                    <h3>No horses found</h3>
+                    <p>Try a different search or add a new horse.</p>
+                </div>
             ) : (
                 <>
 
