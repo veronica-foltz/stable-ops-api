@@ -137,12 +137,21 @@ function Horses() {
                         <div className="horse-card" key={horse.id}>
                             <h2>{horse.name}</h2>
                             <p>{horse.breed}</p>
-                            <button
-                                className="danger-button"
-                                onClick={() => handleDeleteHorse(horse.id)}
-                            >
-                                Delete
-                            </button>
+
+                            <div className="card-actions">
+                                <button
+                                    className="secondary-button"
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    className="danger-button"
+                                    onClick={() => handleDeleteHorse(horse.id)}
+                                >
+                                    Delete
+                                    </button>
+                                </div>
                         </div>
                     ))}
                 </div>
