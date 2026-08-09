@@ -10,6 +10,7 @@ function Horses() {
     const [searchTerm, setSearchTerm] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [editingHorse, setEditingHorse] = useState(null);
+    const [successMessage, setSuccessMessage] = useState("");
     
     const [newHorse, setNewHorse] = useState({
         name: "",
@@ -65,6 +66,12 @@ function Horses() {
 
             setHorses(response.data);
 
+            setSuccessMessage(
+                editingHorse
+                    ? "Horse updated successfully!"
+                    : "Horse added successfully!"
+            );
+
             setNewHorse({
                 name: "",
                 breed: "",
@@ -72,6 +79,11 @@ function Horses() {
 
             setEditingHorse(null);
             setShowModal(false);
+
+            setTimeout(() => {
+                setSuccessMessage("");
+            }, 3000);
+
         } catch (error) {
             console.error(error.response?.data || error.message);
         }
@@ -116,6 +128,12 @@ function Horses() {
     <div className="dashboard">
         <Header />
         <Navigation />
+
+        {successMessage && (
+            <div className="success-message">
+                {successMessage}
+            </div>
+        )}
 
         <section className="page-section">
             <div className="page-heading">
