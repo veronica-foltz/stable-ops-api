@@ -333,3 +333,9 @@
     text-align: center;
     font-weight: 600;
 }
+
+.results-count {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}

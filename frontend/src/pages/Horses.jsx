@@ -140,6 +140,12 @@ function Horses() {
                 <div>
                     <h1>Horses</h1>
                      <p>Manage all horses in your stable.</p>
+
+                     <p className="results-count">
+                        {searchTerm
+                            ? `Showing ${filteredHorses.length} of ${horses.length} horses`
+                            : `Showing ${horses.length} horses`}
+                    </p>
                 </div>
 
                 <button
