@@ -4,6 +4,9 @@ import Dashboard from "./pages/Dashboard";
 
 import Horses from "./pages/Horses";
 
+import Employees from "./pages/Employees";
+import Tasks from "./pages/Tasks";
+
 function App() {
     return (
         <Routes>
