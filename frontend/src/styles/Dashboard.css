@@ -113,7 +113,7 @@
 }
 
 .logo {
-    font-size: 2.25rem;
+    font-size: 3rem;
     font-weight: 700;
     color: var(--text);
 }
@@ -294,7 +294,7 @@
 }
 
 .danger-button {
-    background: #dc2626;
+    background: #475569;
     color: white;
     border: none;
     width: 90px;
