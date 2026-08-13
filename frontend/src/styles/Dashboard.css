@@ -344,3 +344,27 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.management-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.management-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.management-card h2 {
+    margin: 0 0 8px;
+    color: var(--primary);
+}
+
+.management-card p {
+    margin: 0;
+    color: var(--muted);
+}
