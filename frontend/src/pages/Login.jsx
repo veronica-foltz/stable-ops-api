@@ -5,68 +5,104 @@ import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const handleLogin = async (e) => {
-    e.preventDefault();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-    try {
-        const formData = new URLSearchParams();
-        formData.append("username", username);
-        formData.append("password", password);
+    const navigate = useNavigate();
 
-        const response = await api.post("/login", formData);
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-        localStorage.setItem("access_token", response.data.access_token);
+        try {
+            const formData = new URLSearchParams();
+            formData.append("username", username);
+            formData.append("password", password);
 
-        navigate("/dashboard"); 
-    } catch (error) {
-        console.error(error.response?.data || error.message);
-    }
-};
+            const response = await api.post("/login", formData);
 
-  return (
-    <div className="login-container">
-      <h1>Stable Ops</h1>
+            localStorage.setItem(
+                "access_token",
+                response.data.access_token
+            );
 
-      <h2>Login</h2>
+            localStorage.setItem("username", username);
 
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username</label>
-          <br />
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+            navigate("/dashboard");
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        }
+    };
+
+    const handleGuestLogin = async () => {
+        try {
+            const formData = new URLSearchParams();
+            formData.append("username", "guest");
+            formData.append("password", "guest123");
+
+            const response = await api.post("/login", formData);
+
+            localStorage.setItem(
+                "access_token",
+                response.data.access_token
+            );
+
+            localStorage.setItem("username", "Guest");
+
+            navigate("/dashboard");
+        } catch (error) {
+            console.error(error.response?.data || error.message);
+        }
+    };
+
+    return (
+        <div className="login-container">
+            <h1>Stable Ops</h1>
+
+            <h2>Login</h2>
+
+            <form onSubmit={handleLogin}>
+                <div>
+                    <label>Username</label>
+                    <br />
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) =>
+                            setUsername(e.target.value)
+                        }
+                    />
+                </div>
+
+                <br />
+
+                <div>
+                    <label>Password</label>
+                    <br />
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) =>
+                            setPassword(e.target.value)
+                        }
+                    />
+                </div>
+
+                <br />
+
+                <button type="submit">
+                    Login
+                </button>
+
+                <button
+                    type="button"
+                    className="guest-button"
+                    onClick={handleGuestLogin}
+                >
+                    Continue as Guest
+                </button>
+            </form>
         </div>
-
-        <br />
-
-        <div>
-          <label>Password</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <br />
-
-        <button type="submit">
-          Login
-        </button>
-
-        <button type="button" className="guest-button">
-            Continue as Guest
-        </button>
-      </form>
-    </div>
-  );
+    );
 }
 
 export default Login;

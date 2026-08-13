@@ -1,4 +1,6 @@
 function Header() {
+    const username = localStorage.getItem("username");
+
     return (
         <header className="header">
             <div className="logo">
@@ -6,7 +8,7 @@ function Header() {
             </div>
 
             <div className="user">
-                Veronica
+                {username || "Guest"}
             </div>
         </header>
     );
