@@ -125,12 +125,12 @@ function Employees() {
 
             <section className="page-section">
                 <div className="page-heading">
-                    <div>
+                    
                         <h1>Employees</h1>
                         <p>
                             Manage all {employees.length} employees in your stable.
                         </p>
-                    </div>
+                    
 
                     <button
                         className="primary-button"

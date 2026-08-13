@@ -137,7 +137,7 @@ function Horses() {
 
         <section className="page-section">
             <div className="page-heading">
-                <div>
+                
                     <h1>Horses</h1>
                      <p>Manage all {horses.length} horses in your stable.</p>
 
@@ -146,7 +146,7 @@ function Horses() {
                             ? `Showing ${filteredHorses.length} of ${horses.length} horses`
                             : `Showing ${horses.length} horses`}
                     </p>
-                </div>
+               
 
                 <button
                     className="primary-button"

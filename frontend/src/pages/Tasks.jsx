@@ -178,12 +178,12 @@ function Tasks() {
 
             <section className="page-section">
                 <div className="page-heading">
-                    <div>
+                    
                         <h1>Tasks</h1>
                         <p>
                             Manage all {tasks.length} stable tasks.
                         </p>
-                    </div>
+                    
 
                     <button
                         className="primary-button"
