@@ -264,18 +264,13 @@ function Horses() {
 
                     <button
                         className="primary-button"
-                        onClick={() => {
-                            setEditingHorse(null);
-
-                            setNewHorse({
-                                name: "",
-                                breed: "",
-                            });
-
-                            setShowModal(true);
-                        }}
+                        onClick={handleAddHorse}
+                        disabled={
+                            !newHorse.name.trim() ||
+                            !newHorse.breed.trim()
+                        }
                     >
-                        + Add Horse
+                        {editingHorse ? "Save Changes" : "Save Horse"}
                     </button>
                 </div>
                 </div>
