@@ -340,3 +340,7 @@
     font-size: 0.95rem;
 }
 
+.primary-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
