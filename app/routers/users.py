@@ -82,7 +82,7 @@ def get_me(
 @router.get("/users")
 def get_users(
     db: Session = Depends(get_db),
-    current_user = Depends(require_admin)
+    current_user = Depends(get_current_user)
 ):
     users = db.query(models.User).all()
 
@@ -99,7 +99,7 @@ def get_users(
 def delete_user(
     user_id: int,
     db: Session = Depends(get_db),
-    current_user = Depends(require_admin)
+    current_user = Depends(get_current_user)
 
 ):
     
