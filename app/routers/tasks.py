@@ -62,7 +62,7 @@ def get_tasks(
 def create_task(
     task: TaskCreate,
     db: Session = Depends(get_db),
-    current_user = Depends(require_non_guest)
+    current_user = Depends(get_current_user)
 ):
     db_task = models.Task(
         title=task.title,
@@ -93,7 +93,7 @@ def update_task(
     task_id: int,
     task: TaskUpdate,
     db: Session = Depends(get_db),
-    current_user = Depends(require_non_guest)
+    current_user = Depends(get_current_user)
 ):
 
     db_task = db.query(models.Task).filter(

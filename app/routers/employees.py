@@ -31,7 +31,7 @@ def get_employees(
 def create_employee(
     employee: EmployeeCreate, 
     db: Session = Depends(get_db),
-    current_user = Depends(require_manager_or_admin)
+    current_user = Depends(get_current_user)
  ):
 
     db_employee = models.Employee(
