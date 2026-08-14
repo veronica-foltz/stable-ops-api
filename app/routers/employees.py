@@ -82,7 +82,7 @@ def update_employee(
 def delete_employee(
         employee_id: int, 
         db: Session = Depends(get_db),
-        current_user = Depends(require_admin)
+        current_user = Depends(get_current_user)
     ):
 
         employee = db.query(models.Employee).filter(
