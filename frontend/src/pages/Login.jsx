@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -14,6 +15,8 @@ function Login() {
         e.preventDefault();
 
         try {
+            setLoading(true);
+
             const formData = new URLSearchParams();
             formData.append("username", username);
             formData.append("password", password);
@@ -30,11 +33,15 @@ function Login() {
             navigate("/dashboard");
         } catch (error) {
             console.error(error.response?.data || error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleGuestLogin = async () => {
         try {
+            setLoading(true);
+
             const formData = new URLSearchParams();
             formData.append("username", "guest");
             formData.append("password", "guest123");
@@ -51,6 +58,8 @@ function Login() {
             navigate("/dashboard");
         } catch (error) {
             console.error(error.response?.data || error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -89,16 +98,19 @@ function Login() {
 
                 <br />
 
-                <button type="submit">
-                    Login
+                <button type="submit"
+                    disabled={loading}
+                >
+                    {loading ? "Signing in..." : "Login"}
                 </button>
 
                 <button
                     type="button"
                     className="guest-button"
                     onClick={handleGuestLogin}
+                    disabled={loading}
                 >
-                    Continue as Guest
+                    {loading ? "Starting demo..." : "Continue as Guest"}
                 </button>
             </form>
         </div>
