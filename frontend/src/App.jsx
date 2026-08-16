@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
@@ -15,6 +15,8 @@ function App() {
             <Route path="/horses" element={<Horses />} />
             <Route path="/employees" element={<Employees />} />
             <Route path="/tasks" element={<Tasks />} />
+            
+            <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );
 }
