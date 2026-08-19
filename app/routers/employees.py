@@ -99,7 +99,7 @@ def delete_employee(
 
 @router.get("/employees/{employee_id}/tasks")
 def get_employee_tasks(
-    employee_id: int,
+    employee_id: int
     db: Session = Depends(get_db)
 ):
     employee = db.query(models.Employee).filter(
